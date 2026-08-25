@@ -36,6 +36,9 @@ func (m *Merger) ImportSnapshot(snap Snapshot) error {
         }
     }
     m.store.ReplaceStack(layers)
+    m.mu.Lock()
+    m.listCache = nil
+    m.mu.Unlock()
     if m.audit != nil {
         m.audit.Printf("import snapshot layers=%d", len(layers))
     }
